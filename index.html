@@ -9,13 +9,31 @@
       height: 100vh;
       border: none;
     }
+    body {
+      margin: 0;
+    }
   </style>
 </head>
 <body>
-    <iframe 
-    src="https://hubcloud.foo/drive/huxuauxbxuyudri" 
-    sandbox="allow-scripts allow-forms allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
-    referrerpolicy="no-referrer"
-  ></iframe>
+
+<iframe id="viewerFrame"
+  sandbox="allow-scripts allow-forms allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
+  referrerpolicy="no-referrer">
+</iframe>
+
+<script>
+  // URL parameter read karna
+  const params = new URLSearchParams(window.location.search);
+  const targetUrl = params.get("url");
+
+  const iframe = document.getElementById("viewerFrame");
+
+  if (targetUrl) {
+    iframe.src = targetUrl;
+  } else {
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:40px;'>Invalid or Missing URL</h2>";
+  }
+</script>
+
 </body>
 </html>
