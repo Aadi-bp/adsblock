@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Submit Page</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .paste-btn {
+            padding: 0 16px;
+            border-radius: 12px;
+            border: none;
+            background: rgba(255,255,255,0.3);
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .paste-btn:hover {
+            background: rgba(255,255,255,0.45);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: white;
+            color: #764ba2;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #f1f1f1;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Paste Your Link 🔗</h1>
+
+        <div class="input-row">
+            <input type="url" id="userLink" placeholder="https://example.com" required>
+            <button class="paste-btn" onclick="pasteLink()">📋 Paste</button>
+        </div>
+
+        <button class="submit-btn" onclick="redirectLink()">Submit</button>
+    </div>
+
+    <script>
+        async function pasteLink() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById("userLink").value = text;
+            } catch (err) {
+                alert("Clipboard blocked 😢\nPaste manually (Ctrl+V)");
+            }
+        }
+
+        function redirectLink() {
+            const link = document.getElementById("userLink").value.trim();
+
+            if (!link) {
+                alert("Please paste a link first 🙂");
+                return;
+            }
+
+            const encodedLink = encodeURIComponent(link);
+            const finalURL = "https://aadi-bp.github.io/adsblock/?url=" + encodedLink;
+
+            window.location.href = finalURL;
+        }
+
+        document.getElementById("userLink")
+            .addEventListener("keypress", function(e) {
+                if (e.key === "Enter") {
+                    redirectLink();
+                }
+            });
+    </script>
+
+</body>
+</html>
